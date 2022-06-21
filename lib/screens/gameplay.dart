@@ -1,3 +1,6 @@
+import 'dart:typed_data';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animator/flutter_animator.dart';
@@ -10,7 +13,13 @@ import 'package:wave_transition/wave_transition.dart';
 import '../widget/app_section.dart';
 import '../widget/border._builder.dart';
 import '../widget/text_iocn.dart';
-import 'intro_screen.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 class GamePlay extends StatefulWidget {
   const GamePlay({Key? key}) : super(key: key);
@@ -19,7 +28,13 @@ class GamePlay extends StatefulWidget {
   State<GamePlay> createState() => _GamePlayState();
 }
 
-class _GamePlayState extends State<GamePlay> {
+enum AnswerState {
+  correct,
+  wrong,
+}
+
+class _GamePlayState extends State<GamePlay>
+    with SingleTickerProviderStateMixin {
   List<QeustionModel> questions = [
     QeustionModel(
       questionText: 'ما هي عاصمة مصر ؟',
@@ -31,6 +46,7 @@ class _GamePlayState extends State<GamePlay> {
 
   int selectedOption = -1;
   Color currentColor = Colors.transparent;
+  var _controller;
   bool onTap(
     int optionIndex,
   ) {
@@ -38,25 +54,94 @@ class _GamePlayState extends State<GamePlay> {
     selectedOption = optionIndex;
     if (optionIndex == questions[0].answerIndex) {
       currentColor = Colors.green;
+      currency += 100;
+      playClickSound(AnswerState.correct);
       showDialog(
           context: context,
           barrierColor: Colors.transparent,
           builder: (context) {
             Future.delayed(Duration(milliseconds: 2500), () {
+              _controller.value = 0.0; //rest coins animation
+
               Navigator.pop(context);
-              selectedOption = -1;
+              Navigator.pop(context);
+              // selectedOption = -1;
+              // setState(() {});
             });
-            return Lottie.network(
-              'https://assets2.lottiefiles.com/packages/lf20_lg6lh7fp.json',
-              repeat: false,
-              animate: true,
+            return SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: MediaQuery.of(context).size.height * 0.045,
+                    right: 0,
+                    width: MediaQuery.of(context).size.width,
+                    child: Lottie.network(
+                      'https://assets6.lottiefiles.com/packages/lf20_bRNzlt.json',
+                      repeat: false,
+                      controller: _controller,
+                      onLoaded: (composition) {
+                        _controller
+                          ..duration = composition.duration
+                          ..repeat();
+                      },
+                    ),
+                  ),
+                  Lottie.network(
+                    'https://assets2.lottiefiles.com/packages/lf20_lg6lh7fp.json',
+                    repeat: false,
+                    animate: true,
+                  ),
+                ],
+              ),
             );
           });
+
       return true;
     } else {
+      playClickSound(AnswerState.wrong);
       currentColor = Colors.red;
       return false;
     }
+  }
+
+  final player = AudioPlayer();
+
+  Future<void> playClickSound(AnswerState state) async {
+    if (state == AnswerState.correct) {
+      await player.play(
+        AssetSource('audio/correct.mp3'),
+      );
+    } else {
+      await player.play(
+        AssetSource('audio/wrong.wav'),
+      );
+    }
+  }
+
+  int currency = 220;
+
+  @override
+  void initState() {
+    _controller = AnimationController(vsync: this);
+    _controller.addListener(() {
+      print(_controller.value);
+      //  if the full duration of the animation is 8 secs then 0.5 is 4 secs
+      if (_controller.value > 0.34) {
+// When it gets there hold it there.
+        _controller.value = 0.34;
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    _controller.dispose();
+
+    super.dispose();
   }
 
   @override
@@ -133,6 +218,7 @@ class _GamePlayState extends State<GamePlay> {
                   decoration: kGradientBoxDecoration,
                 ),
               ),
+              //currency and player name
               Positioned(
                 //at most right
                 top: MediaQuery.of(context).size.height * 0.01,
@@ -151,7 +237,7 @@ class _GamePlayState extends State<GamePlay> {
                     ),
                     BorderBuilder(
                       child: TextWithIcon(
-                        text: '220',
+                        text: '$currency',
                         iconImage: 'assets/coin.png',
                       ),
                       verticalPadding: 3,
@@ -186,7 +272,7 @@ class _GamePlayState extends State<GamePlay> {
                         color: Colors.amber,
                       ),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           onTap(0);
                         },
                         child: Container(

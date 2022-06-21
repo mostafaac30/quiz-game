@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
@@ -23,19 +24,30 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
   // This widget is the root of your application.
-  var _controller;
+  // var _controller;
+  final playerBackground = AudioPlayer()..setReleaseMode(ReleaseMode.loop);
+
+  Future<void> playBackground() async {
+    await playerBackground.play(
+      AssetSource(
+        'audio/Humming.mp3',
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this);
-    _controller.addListener(() {
-      print(_controller.value);
-      //  if the full duration of the animation is 8 secs then 0.5 is 4 secs
-      if (_controller.value > 0.34) {
-// When it gets there hold it there.
-        _controller.value = 0.34;
-      }
-    });
+    playBackground();
+//     _controller = AnimationController(vsync: this);
+//     _controller.addListener(() {
+//       print(_controller.value);
+//       //  if the full duration of the animation is 8 secs then 0.5 is 4 secs
+//       if (_controller.value > 0.34) {
+// // When it gets there hold it there.
+//         _controller.value = 0.34;
+//       }
+//     });
   }
 
   @override
@@ -152,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   BorderBuilder(
                     child: TextWithIcon(
-                      text: '220',
+                      text: '250',
                       iconImage: 'assets/coin.png',
                     ),
                     verticalPadding: 3,
@@ -185,6 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
             ),
+
             //option 2
             Positioned(
               top: MediaQuery.of(context).size.height * 0.44,
