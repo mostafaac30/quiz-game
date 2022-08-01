@@ -5,9 +5,13 @@ import 'package:flutter_animator/widgets/flippers/flip.dart';
 
 class TextWithIcon extends StatelessWidget {
   final String text;
-  final IconData? icon;
+  bool isIcon;
   final String? iconImage;
-  const TextWithIcon({Key? key, required this.text, this.icon, this.iconImage})
+  TextWithIcon(
+      {Key? key,
+      required this.text,
+      this.isIcon = true,
+      required this.iconImage})
       : super(key: key);
 
   @override
@@ -30,7 +34,10 @@ class TextWithIcon extends StatelessWidget {
           child: Text(
             text,
             key: ValueKey<String>(text),
+            textAlign: TextAlign.center,
+            textDirection: TextDirection.rtl,
             style: TextStyle(
+              fontFamily: "",
               color: Colors.white,
               fontSize: MediaQuery.of(context).size.width * 0.05,
             ),
@@ -39,10 +46,17 @@ class TextWithIcon extends StatelessWidget {
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.025,
         ),
-        icon != null
-            ? Icon(
-                icon,
-                color: Colors.white,
+        isIcon
+            ? Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(100))),
+                child: Image.asset(
+                  iconImage ?? '',
+                  height: 30,
+                  width: 30,
+                  key: ValueKey<String>(text),
+                ),
               )
             : AnimatedSwitcher(
                 duration: Duration(milliseconds: 2500),

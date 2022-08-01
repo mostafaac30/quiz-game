@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:story_view/story_view.dart';
-import 'package:test/pref/preferneces.dart';
+import 'package:test/model/qeustion.dart';
+import 'package:test/preferneces/preferneces.dart';
 import 'package:test/screens/gameplay.dart';
 
 class IntroductionScreen extends StatelessWidget {
@@ -11,14 +12,14 @@ class IntroductionScreen extends StatelessWidget {
     final controller = StoryController();
     List<StoryItem> storyItems = [
       StoryItem.text(
-        title: 'اهلا بك عزيزي الطالب هذه مقدمة السؤال ',
+        title: questions[questionIndex].intro,
         backgroundColor: mainColor,
         textStyle: TextStyle(
           fontSize: 30,
           fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        duration: Duration(seconds: 10),
+        duration: Duration(seconds: 5),
       ),
     ]; // your list of stories
 

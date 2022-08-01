@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:test/pref/preferneces.dart';
+import 'package:test/preferneces/preferneces.dart';
 
 class BorderBuilder extends StatelessWidget {
   final Widget child;

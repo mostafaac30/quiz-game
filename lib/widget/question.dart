@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:test/pref/preferneces.dart';
+import 'package:test/preferneces/preferneces.dart';
 
 class QuestionBuilder extends StatelessWidget {
   final String title;
@@ -32,13 +32,15 @@ class QuestionBuilder extends StatelessWidget {
                   // text
                   Expanded(
                     child: Center(
-                      child: Text(
-                        // title
-                        title,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: MediaQuery.of(context).size.width * 0.055,
-                          fontWeight: FontWeight.bold,
+                      child: FittedBox(
+                        child: Text(
+                          // title
+                          title,
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: MediaQuery.of(context).size.width * 0.055,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
