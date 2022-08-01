@@ -1,6 +1,11 @@
 # quiz-game
 
-https://www.linkedin.com/posts/mostafa-al-mezoury_android-ios-flutter-activity-6946723276958093312-WdNW?utm_source=linkedin_share&utm_medium=member_desktop_web
+# <img src="https://cdns.iconmonstr.com/wp-content/releases/preview/2012/240/iconmonstr-linkedin-3.png" alt="drawing" width="30" height="30" /> [Linkedin Profile](https://www.linkedin.com/posts/mostafa-al-mezoury_android-ios-flutter-activity-6946723276958093312-WdNW)
+
+# Watch App Preview:
+
+# <img src="./1656227900670.gif" alt="drawing" width="500" height="900" /> 
+
 
 A new Flutter project.
 
@@ -17,4 +22,5 @@ For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 # quiz-game
-quiz app
+
+
