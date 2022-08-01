@@ -1,4 +1,4 @@
-# test
+# quiz-game
 
 A new Flutter project.
 
