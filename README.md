@@ -1,6 +1,6 @@
 # quiz-game
 
-<iframe src="https://www.linkedin.com/embed/feed/update/urn:li:ugcPost:6946723268301074432?compact=1" height="399" width="710" frameborder="0" allowfullscreen="" title="منشور مضمن"></iframe>
+https://www.linkedin.com/posts/mostafa-al-mezoury_android-ios-flutter-activity-6946723276958093312-WdNW?utm_source=linkedin_share&utm_medium=member_desktop_web
 
 A new Flutter project.
 
